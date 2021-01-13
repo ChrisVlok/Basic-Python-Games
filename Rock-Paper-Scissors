@@ -1,0 +1,87 @@
+#Display game and rules
+#Play_game:
+
+  #Player_turn
+    #player_selection
+      #player input
+    #computer_select
+      #randomly_select
+
+
+  #check_result():
+    #Win:
+      # R>S, S>P, P>S
+    #Draw:
+      # R==R, P==P, S==S
+    
+game_still_going = True  #setting the global variable
+
+Display_message = 'Challenge R2D2 to game of Rock, Paper, Scissors! Good Luck!'
+print(Display_message)
+
+
+def Play_game():
+    while game_still_going:
+      choose()
+      check_draw()
+      check_player_win()
+      check_computer_win()
+
+
+Player_selection = {}
+Player_selection = input("Select 'R' for Rock, 'P' for Paper or 'S' for Scissors:")
+print(Player_selection)
+
+Selections = {'R', 'P', 'S'}
+Computer_selection = Selections
+Computer_selection = str(Selections)
+print(Computer_selection[2])
+
+def choose():
+  Player_selection
+  Computer_selection[2]
+
+def check_draw():
+  global game_still_going
+  if Computer_selection[2] == Player_selection:
+    game_still_going = False  #changing the state of the global variable in order to brak out of the while loop.
+    print('R2D2 selected the same as you!')
+  return
+
+# Explaining the winning parameters for the player.
+def check_player_win():
+  global game_still_going
+
+  if Player_selection == 'R' and Computer_selection[2]== 'S':
+    game_still_going = False
+    print('You out played R2D2!')
+  elif Player_selection == 'P' and Computer_selection[2] == 'R':
+    game_still_going = False
+    print('You out played R2D2!')
+  elif Player_selection == 'S' and Computer_selection[2] == 'P':
+    game_still_going = False
+    print('You out played R2D2!') 
+  return
+
+
+# Explaining the winning parameters for the computer.
+def check_computer_win():
+  global game_still_going 
+
+  if Computer_selection[2] == 'R' and Player_selection == 'S':
+      game_still_going = False
+      print('R2D2 masterminded you!')
+  elif Computer_selection[2] == 'P' and Player_selection == 'R':
+      game_still_going = False
+      print('R2D2 masterminded you!')
+  elif Computer_selection[2] == 'S' and Player_selection == 'P':
+      game_still_going = False
+      print('R2D2 masterminded you!')
+  return
+
+#Notes:
+  # The game loop needs to be fixed so that the game can continue after ther first round.
+  # I need to figure out nullify all other keyboard inputs besides 'R', 'P' and 'S'.
+  # I am unsure of whether the global variable is being altered correctly.
+
+Play_game()
