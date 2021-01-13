@@ -1,0 +1,204 @@
+# Board
+# Display board
+# Turn
+# Check win
+  # Check row
+  # Check coloumn
+  # Check diagonal
+# win counter & loss counter
+# Check draw
+# Player flip
+
+#----------Global Variables----------------
+
+current_player = 'X' or 'O'
+
+winner = None
+
+game_still_going = True
+
+board = ["_","_","_"
+        ,"_","_","_"
+        ,"_","_","_"]
+
+#-----------------Main Game Operation/Logic----------------------
+def display_board():
+  print(board[0]+'|',board[1]+'|',board[2])
+  print(board[3]+'|',board[4]+'|',board[5]) 
+  print(board[6]+'|',board[7]+'|',board[8])
+
+def play_game():
+  global winner
+  global game_still_going
+  display_board()  #make sure that you display a new board on every game instance
+
+  while game_still_going: #this is not a function it is a global variable hence no parenthesis '()'
+    handle_turn(current_player)
+    check_if_game_over()
+    change_player()
+  
+  #end game:
+  if winner == 'X':
+    print(winner + ' Won')
+  elif winner == 'O':
+    print(winner + ' Won')
+  elif winner == None:
+    print('Draw')
+
+#------------Expansion of Main Game Operation/Logic--------------
+#Expansion happens in same order as operation/game logic
+
+def handle_turn(player):
+  global current_player
+  position = input('Select a postion from 1 - 9: ')
+  #change the position a player selects from a string to an intiger
+  position = int(position)-1
+
+  board[position] = player
+  display_board()
+
+    
+def check_if_game_over():
+  check_win()
+  check_draw()
+
+def check_win():
+  #setting up a global variable so that we can match it to the word winner.
+  global winner
+  global current_player
+  #check rows
+  row_winner = check_rows() #row_winner is a variable
+  #check colomns
+  column_winner = check_columns() #same as above
+  #check diagonals
+  diagonal_winner = check_diagonals() #same as above
+  return
+
+  #how to find the winner:
+  if row_winner:
+    winner = row_winner  #No parenthesis as row_winner is not a function
+  elif column_winner:
+    winner = column_winner
+  elif diagonal_winner:
+    winner = diagonal_winner
+  else:
+    winner = None
+  return
+
+def check_rows():
+  # set it to a global variable
+  global game_still_going
+  global winner
+  global current_player
+   #we are checking here to see if the value of an element in the row is the same and if 3 are in a row ie. 3 'X's or'O's in a row.  Make sure to declare that an empty row is not a win.
+  row_1 = board[0] == board[1] == board[2] != '_'
+  row_2 = board[3] == board[4] == board[5] != '_'
+  row_3 = board[6] == board[7] == board[8] != '_'
+  #if any row has a match we need to indicate that and jump out of the while_game_still_going loop.
+  if row_1 or row_2 or row_3:
+    game_still_going = False
+    winner = current_player
+  # Check if winner is (X or O)
+  if row_1:
+    return board[0]
+  elif row_2:
+    return board[3]
+  elif row_3:
+    return board[6]
+
+def check_columns():
+    # set it to a global variable
+  global game_still_going
+  global winner
+   #we are checking here to see if the value in the column is the same and if 3 are in a column .  Make sure to declare that an empty column is now a win
+  column_1 = board[0] == board[3] == board[6] != '_'
+  column_2 = board[1] == board[4] == board[7] != '_'
+  column_3 = board[2] == board[5] == board[8] != '_'
+  #if any column has a match we need to indicate that and jump out of the while_game_still_going loop.
+  if column_1 or column_2 or column_3:
+    game_still_going = False
+    winner = current_player
+  #here we check to see which of the two "X" or "O" are in the first column of the row so that we can search for a match
+  if column_1:
+    return board[0] 
+  elif column_2:
+    return board[3]
+  elif column_3:
+    return board[6]
+  return
+
+def check_diagonals():
+      # set it to a global variable
+  global game_still_going
+  global winner
+   #we are checking here to see if the value in the column is the same and if 3 are in a column .  Make sure to declare that an empty row is now a win
+  diagonal_1 = board[0] == board[4] == board[8] != '_'
+  diagonal_2 = board[6] == board[4] == board[2] != '_'
+  
+  #if any diagonal has a match we need to indicate that and jump out of the while_game_still_going loop.
+  if diagonal_1 or diagonal_2:
+    game_still_going = False
+    winner = current_player
+  #here we check to see which of the two "X" or "O" are in the first column of the row so that we can search for a match
+  if diagonal_1:
+    return board[0]
+  elif diagonal_2:
+    return board[6]
+  return
+
+def check_draw():
+  return
+  
+
+def change_player():
+  #global variable needs to be addressed:
+  global current_player
+  global winner
+  if current_player == 'X':# make sure to use '==' to indicate that you want the computer to find two matching values
+    current_player = 'O' #use one'=' to show what you would like the new value to be after a match was found
+  elif current_player == 'O':
+    current_player = 'X'
+  return
+    
+# Below is some unused code that I left there just in case. 
+
+#def game_still_going():
+  #handle_turn(player)
+   #if/
+  #check_win()
+    #then end play_game()
+  #/else if
+  #check_draw()
+    #then end play_game()
+  #/else 
+  #keep_playing()
+    #flip_turn()
+  #keep display_board  
+  
+#def check_if_game_over():
+  #if/
+  #check_win()
+    #then end play_game
+  #/else if
+  #check_draw()
+    #then end play_game
+  #/else 
+  #keep_playing()
+    #flip_turn
+  #keep display_board 
+
+#def check_win():
+  #check_rows()
+  #check_columns()
+  #check_draw()
+
+#def check_draw():
+  #check for open space in position 1 - 9
+
+#def keep_playing():
+  #flip_turn()
+
+
+
+
+play_game()  #all code above is now condensed to this one line
